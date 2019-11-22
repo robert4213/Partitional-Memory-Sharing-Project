@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e585313d-429c-40ae-b8bb-569771428e0e" name="Default Changelist" comment="" />
+    <list default="true" id="e585313d-429c-40ae-b8bb-569771428e0e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../memorysharing_test_server/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/memorysharing.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../memorysharing_test_server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../memorysharing_test_server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../memorysharing_test_server/memorysharing_test_server.iml" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +39,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -43,9 +53,11 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1SutsHupHILGoD4l6tLxPKSg340" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="E:/CMPE273/Lab3b/client-step2-complete" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -97,10 +109,27 @@
       <updated>1572425513835</updated>
       <workItem from="1572425518785" duration="6984000" />
       <workItem from="1572470159787" duration="10250000" />
+      <workItem from="1572580102200" duration="53000" />
+      <workItem from="1572580166223" duration="694000" />
+      <workItem from="1572598388308" duration="95000" />
+      <workItem from="1572940031870" duration="930000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
