@@ -7,13 +7,15 @@ function Data() {
     this.dataSize = '';
 
     //Read Data from disk
-    this.readFIle = function (address){
-
-    }
+    this.readFile = function (address){
+        return this;
+    };
 
     //Save file to disk
     this.saveFile = function (address , chunk) {
 
-    }
+    };
 
 }
+
+module.exports = Data;
