@@ -3,15 +3,15 @@ var app_name = 'dropbox';
 function Data() {
     // this.filename = '';
     this.chunk = '';
-    this.hashId = '';
+    this.hashId = ''; //app_name+filename
     this.dataSize = '';
 
-    //Read Data from disk
+    //TODO Read Data from disk - leave for Xiaoting
     this.readFile = function (address){
         return this;
     };
 
-    //Save file to disk
+    //TODO Save file to disk - leave for Xiaoting
     this.saveFile = function (address , chunk) {
 
     };
