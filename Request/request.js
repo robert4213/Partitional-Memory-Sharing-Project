@@ -1,29 +1,33 @@
-function Request () {
-    this.request = '';
+const webreq = require('request');
+const Data = require('./data');
+
+
+function Request (localIp) {
+    this.type = '';
     this.targetAddress = '';
     this.targetPort = '';
     this.targetId = '';
-    this.sourceAddress = "10.0.0.99";
+    this.sourceAddress = localIp;
     this.sourcePort = 99;
     this.data = [];
 
     this.create = function () {
-        this.request = "create";
+        this.type = "create";
         return this;
     };
 
     this.read = function () {
-        this.request = "read";
+        this.type = "read";
         return this;
     };
 
     this.update = function () {
-        this.request = "update";
+        this.type = "update";
         return this;
     };
 
     this.delete = function () {
-        this.request = "delete";
+        this.type = "delete";
         return this;
     };
 
@@ -52,6 +56,17 @@ function Request () {
 
     this.send = function () {
         console.log(JSON.stringify(this));
+        // webreq('',{json:true}, (err, res, body) => {
+        //     if (err) { return console.log(err); }
+        //     console.log(body);
+        //     // console.log(res);
+        //     if(this.type === 'read' && body.data != null){
+        //         for(const file in body.data){
+        //             Data().saveFile(file.);
+        //         }
+        //     }
+        // });
+
     };
 }
 
