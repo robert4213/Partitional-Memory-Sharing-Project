@@ -2,6 +2,7 @@
 
 
 ## Client Request & Response
+Both request and response is based from HTTP request and response
 Currently we will use restful API to transfer request/response through client and nodes. 
 ### Request
 ```
