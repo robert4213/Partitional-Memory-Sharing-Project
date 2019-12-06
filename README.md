@@ -2,7 +2,9 @@
 
 
 ## Client Request & Response
-Both request and response are based on HTTP request and response
+Both request and response are based on HTTP request and response, but are applied in JSON format.
+
+
 Currently we will use restful API to transfer request/response through client and nodes. 
 ### Request
 ```
