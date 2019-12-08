@@ -6,8 +6,8 @@ const path = require('path');
 function Data() {
     // this.filename = '';
     this.chunk = '';
-    this.filename = '';
-    this.appName = app_name; //app_name+filename
+    this.filename = ''; // path/filename
+    this.appName = app_name; // app_name/username
     this.dataSize = '';
 
     this.setUser  = function (username) {
@@ -26,7 +26,7 @@ function Data() {
         this.filename = path.join(remoteAddress,path.basename(localAddress));
         try {
             this.chunk = fs.readFileSync(localAddress, {encoding: 'hex'});
-            this.dataSize =fs.statSync(localAddress).size;
+            this.dataSize = fs.statSync(localAddress).size;
         }catch (e) {
             console.log(e);
         }
@@ -38,7 +38,8 @@ function Data() {
      * @param remoteAddress Remote file address
      */
     this.readFile = function (remoteAddress) {
-
+        this.filename = remoteAddress;
+        return this;
     }
 
 }
