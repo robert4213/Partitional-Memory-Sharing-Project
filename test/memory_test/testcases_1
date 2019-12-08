@@ -1,0 +1,22 @@
+1. Simplist test case
+
+Single input file as demo showed to be uploaded from client, to one healthy server.
+Demo: SenderNode.py
+
+Expected result:
+	File uploaded successfully, same file downloaded to client successfully.
+	Memory page located correctly.
+
+Actual result:
+	File uploaded and downloaded successfully.
+	Client output 
+		Successfully saved the data with hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+		Successfully downloaded file with hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+	Server output:
+		Number of pages in memory 1048576
+		Node is READY
+		Writing new hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+		Enough pages available to save the data
+		Successfully saved the data in 4 pages: 
+		Free pages left:  1048572
+		Returning: data for d38c538381efe472606b98f7764dc9526c365e06 composed of 4 pages.

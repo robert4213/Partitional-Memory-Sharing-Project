@@ -1,0 +1,34 @@
+2. Multiple files uploaded form client to an unhealthy server.
+
+Server dies after one file uploaded, to achieve it, add sleep() function between each upload file and kill server after first file uploaded.
+
+Modification on SenderNode.py is needed since it was hardcoded.
+New file: SenderNodeMultipleFiles.py
+
+Expected result:
+	Only one file uploaded correctly. Should notify user server is down, which files are uploaded and which failed.
+Actual result:
+	Exception was thrown.
+	Client output:
+		Successfully saved the data with hash_id:  b0bd240434fefb85e9dd442e03d34c027e82ab52
+		Traceback (most recent call last):
+		  File "src/SenderNodeMultipleFiles.py", line 78, in <module>
+		    sendNode.upload(app_n, file_n, file_p, file_size_bytes)
+		  File "src/SenderNodeMultipleFiles.py", line 51, in upload
+		    response = self.stub.upload(chunks_generator, metadata=metadata)
+		  File "/usr/local/lib/python3.7/site-packages/grpc/_channel.py", line 871, in __call__
+		    return _end_unary_response_blocking(state, call, False, None)
+		  File "/usr/local/lib/python3.7/site-packages/grpc/_channel.py", line 592, in _end_unary_response_blocking
+		    raise _Rendezvous(state, None, None, deadline)
+		grpc._channel._Rendezvous: <_Rendezvous of RPC that terminated with:
+			status = StatusCode.UNAVAILABLE
+			details = "failed to connect to all addresses"
+			debug_error_string = "{"created":"@1575787611.714393000","description":"Failed to pick subchannel","file":"src/core/ext/filters/client_channel/client_channel.cc","file_line":3934,"referenced_errors":[{"created":"@1575787611.714390000","description":"failed to connect to all addresses","file":"src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc","file_line":393,"grpc_status":14}]}"
+	Server output:
+		Number of pages in memory 1048576
+		Node is READY
+		Writing new hash_id:  b0bd240434fefb85e9dd442e03d34c027e82ab52
+		Enough pages available to save the data
+		Successfully saved the data in 4 pages: 
+		Free pages left:  1048572
+		^C
