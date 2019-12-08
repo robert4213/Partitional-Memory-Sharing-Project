@@ -46,7 +46,6 @@ function Data() {
 
 module.exports = Data;
 
-// TODO change to read Data
 module.exports.saveFile = function (localAddress, filename, chunk) {
     fs.writeFile( path.join(localAddress,filename),chunk,{encoding:'hex'},function (err) {
         if(err){

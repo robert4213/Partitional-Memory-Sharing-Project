@@ -1,7 +1,8 @@
 const Request = require('./Request/request');
 const Data = require('./Request/data');
-const Status = require('./Status/status')
+const Status = require('./Status/status_old')
 
+global.status = {};
 //status read
 status = new Status("10.0.0.1", 4455)
 status.getStatusInBackground()

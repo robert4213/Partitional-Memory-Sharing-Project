@@ -1,0 +1,24 @@
+{
+    "root": {
+        "a": {
+            "b": {
+                "c": {
+                    "a.txt": "/root/a/b/c/a.txt"
+                },
+                "asd.md": "/root/a/b/asd.md"
+            }
+        },
+        "b": {
+            "c": {
+                "cd": {
+                    "d.txt": "/root/b/c/cd/d.txt"
+                }
+            },
+            "cc.txt": "/root/b/cc.txt",
+            "d": {
+                "d.txt": "/root/b/d/d.txt"
+            }
+        },
+        "trc.txt": "/root/trc.txt"
+    }
+}
