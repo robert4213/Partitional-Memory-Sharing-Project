@@ -1,0 +1,26 @@
+3. Local file got updated with same file name and uploaded to server.
+
+Modification on SenderNode.py is needed since it was hardcoded.
+New file: SenderNodeUpdateFile.py
+
+Expected result:
+	Updated file overwrites the original one, page freed and reassigned, updated file downloaded.
+Actual result:
+	File overwritten on server, page located correctly; updated file was downloaded.
+	Client output:
+		Successfully saved the data with hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+		Successfully saved the data with hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+		Successfully downloaded file with hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+	Server output:
+		Number of pages in memory 1048576
+		Node is READY
+		Writing new hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+		Enough pages available to save the data
+		Successfully saved the data in 4 pages: 
+		Free pages left:  1048572
+		The following hash_id exist and it will be overwritten:  d38c538381efe472606b98f7764dc9526c365e06
+		Successfully deleted hash_id:  d38c538381efe472606b98f7764dc9526c365e06
+		Enough pages available to save the data
+		Successfully saved the data in 1 pages: 
+		Free pages left:  1048575
+		Returning: data for d38c538381efe472606b98f7764dc9526c365e06 composed of 1 pages.

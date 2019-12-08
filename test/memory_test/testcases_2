@@ -1,0 +1,34 @@
+2. Multiple files uploaded form client to a healthy server.
+
+Modification on SenderNode.py is needed since it was hardcoded.
+New file: SenderNodeMultipleFiles.py
+
+Expected result:
+	Files uploaded and downloaded successfully.
+Actual result:
+	Files uploaded and downloaded successfully.
+	Client output:
+		Successfully saved the data with hash_id:  b0bd240434fefb85e9dd442e03d34c027e82ab52
+		Successfully saved the data with hash_id:  44ce159066654484b5d9fdba2ff4bc695927fb91
+		Successfully saved the data with hash_id:  445e66d69eef9f0527e991e4c7e43f79b92d02f2
+		Successfully downloaded file with hash_id:  b0bd240434fefb85e9dd442e03d34c027e82ab52
+		Successfully downloaded file with hash_id:  44ce159066654484b5d9fdba2ff4bc695927fb91
+		Successfully downloaded file with hash_id:  445e66d69eef9f0527e991e4c7e43f79b92d02f2
+	Server output:
+		Number of pages in memory 1048576
+		Node is READY
+		Writing new hash_id:  b0bd240434fefb85e9dd442e03d34c027e82ab52
+		Enough pages available to save the data
+		Successfully saved the data in 4 pages: 
+		Free pages left:  1048572
+		Writing new hash_id:  44ce159066654484b5d9fdba2ff4bc695927fb91
+		Enough pages available to save the data
+		Successfully saved the data in 4 pages: 
+		Free pages left:  1048568
+		Writing new hash_id:  445e66d69eef9f0527e991e4c7e43f79b92d02f2
+		Enough pages available to save the data
+		Successfully saved the data in 4 pages: 
+		Free pages left:  1048564
+		Returning: data for b0bd240434fefb85e9dd442e03d34c027e82ab52 composed of 4 pages.
+		Returning: data for 44ce159066654484b5d9fdba2ff4bc695927fb91 composed of 4 pages.
+		Returning: data for 445e66d69eef9f0527e991e4c7e43f79b92d02f2 composed of 4 pages.
