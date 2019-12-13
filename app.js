@@ -27,8 +27,11 @@ app.post('/file',(req,res,next)=>{
 });
 
 app.get('/status',(req,res,next)=>{
+    let file = {
+        "file":["a.txt","b.txt","c.txt","d.txt"]
+    };
     console.log(req);
-    res.status(200).json({Succeed:200});
+    res.status(200).json(file);
     // res.status(200).json(Status(req.user,req.ip, PORT));
 });
 
