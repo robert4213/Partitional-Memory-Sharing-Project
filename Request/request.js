@@ -31,6 +31,11 @@ function Request (localIp) {
         return this;
     };
 
+    this.replicate = function () {
+        this.type = "replicate";
+        return this;
+    };
+
     this.setAddress = function (address) {
         this.targetAddress = address;
         return this;
@@ -51,6 +56,14 @@ function Request (localIp) {
             this.data = [];
         }
         this.data.push(data);
+        return this;
+    };
+
+    this.addDataArray = function (data) {
+        if (!Array.isArray(this.data)) {
+            this.data = [];
+        }
+        this.data = data;
         return this;
     };
 

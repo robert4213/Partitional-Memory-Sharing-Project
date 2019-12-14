@@ -4,13 +4,13 @@ Data = require('../Request/data');
 var fs = require('fs');
 
 
-var list = ["/root/a/b/c/a.txt",'/root/b/c/cd/d.txt','/root/b/cc.txt','/root/b/d/d.txt','/root/trc.txt','/root/a/b/asd.md'];
-var fileList = filenamelist(list);
-
-console.log(fileList['root'] instanceof Object);
-console.log(fileList['root']['trc.txt'] instanceof  Object);
-console.log(Object.getPrototypeOf(fileList['root']['trc.txt']) === String.prototype);
-console.log(Object.prototype.toString.call(fileList['root']));
+// var list = ["/root/a/b/c/a.txt",'/root/b/c/cd/d.txt','/root/b/cc.txt','/root/b/d/d.txt','/root/trc.txt','/root/a/b/asd.md'];
+// var fileList = filenamelist(list);
+//
+// console.log(fileList['root'] instanceof Object);
+// console.log(fileList['root']['trc.txt'] instanceof  Object);
+// console.log(Object.getPrototypeOf(fileList['root']['trc.txt']) === String.prototype);
+// console.log(Object.prototype.toString.call(fileList['root']));
 // console.log(filenamelist(list));
 // console.log(fileList['root']['a']['b']);
 //
