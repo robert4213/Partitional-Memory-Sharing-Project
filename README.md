@@ -59,27 +59,11 @@ Currently we will use restful API to transfer request/response through client an
 ## File List Format
 ```
 {
-    "root": {
-        "a": {
-            "b": {
-                "c": {
-                    "a.txt": "/root/a/b/c/a.txt"
-                },
-                "asd.md": "/root/a/b/asd.md"
-            }
-        },
-        "b": {
-            "c": {
-                "cd": {
-                    "d.txt": "/root/b/c/cd/d.txt"
-                }
-            },
-            "cc.txt": "/root/b/cc.txt",
-            "d": {
-                "d.txt": "/root/b/d/d.txt"
-            }
-        },
-        "trc.txt": "/root/trc.txt"
-    }
+    "file": [
+        "a.txt",
+        "b.txt",
+        "c.txt",
+        "d.txt"
+    ]
 }
 ```
