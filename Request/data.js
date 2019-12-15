@@ -1,6 +1,6 @@
-var app_name = 'dropbox';
+const app_name = 'dropbox';
 const fs = require('fs');
-const path = require('path');
+const path = require('path').posix;
 const multiparty = require('multiparty');
 
 
@@ -28,7 +28,8 @@ function Data() {
         this.filename = path.join(remoteAddress,path.basename(localAddress));
         try {
             this.chunk = fs.readFileSync(localAddress, {encoding: 'hex'});
-            this.dataSize = fs.statSync(localAddress).size * 2; // HEX : BYTE  = 2:1
+            // this.dataSize = fs.statSync(localAddress).size * 2; // HEX : BYTE  = 2:1
+            this.dataSize = this.chunk.length;
         }catch (e) {
             console.log(e);
         }

@@ -1,7 +1,6 @@
 const request = require('../Request/request');
 const Data = require('../Request/data');
 const fileList = require('./filelist');
-require('./status');
 
 function StatusHandler(){
     this.status = {};

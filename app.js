@@ -12,9 +12,6 @@ const Status = require('./Status/status_handler');
 
 const PORT = 4455;
 
-const result = function(status, list){
-
-}
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());

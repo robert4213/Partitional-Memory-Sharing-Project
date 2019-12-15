@@ -1,7 +1,7 @@
 const Request = require('./Request/request');
 const Data = require('./Request/data');
 const Status = require('./Status/status_old');
-const path = require('path');
+const path = require('path').posix;
 const Mt = require('./MultiThread/mt');
 
 global.status = {};
@@ -12,21 +12,21 @@ global.status = {};
 mt = new Mt();
 
 // Upload file
-data1 = new Data().setUser("test1").loadFile(path.join(__dirname,'app.js'),'root').chunks(200);
-console.log("Filename",data1[0]["filename"]);
-console.log(path.basename(data1[0]["filename"]));
+data1 = new Data().setUser("test1").loadFile(path.join(__dirname,'data.txt'),'root').chunks(4);
+// console.log("Filename",data1[0]["filename"]);
+// console.log(path.basename(data1[0]["filename"]));
 // response1 = new Request('localhost').update().setAddress("10.0.0.1").setPort(4455).addDataArray(data1);
 responseArray = [];
 for(let chunk in data1){
     if (data1.hasOwnProperty(chunk)) {
-        let response = new Request('localhost').update().setAddress("10.0.0.1").setPort(4455).addData(data1[chunk]);
+        let response = new Request('localhost').update().setAddress("10.0.0.1:9999").setPort(4455).addData(data1[chunk]);
         responseArray.push(response);
     }
 }
 console.log(JSON.stringify(responseArray));
 // Data.saveFile(__dirname,"image38.jpg",data1.chunk);
 mt.addRequestArray(responseArray);
-response = mt.execute(4);
+response = mt.execute(1);
 
 
 // // Read file

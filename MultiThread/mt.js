@@ -1,10 +1,11 @@
 const cluster = require('cluster');
-const path = require('path');
+const path = require('path').posix;
+const superagent = require('superagent');
 const Request = require('../Request/request');
+const url = require('url');
 
 function multiProcess() {
     this.requestQ = [];
-    this.responseQ = [];
     this.filelist = [];
     this.node = [];
 
@@ -57,34 +58,63 @@ function multiProcess() {
         } else{
             process.on('message', function(message) {
                 console.log('Process ' + message[0] + '  is starting to work.');
+                console.log('Request: ',message[1]);
                 let node = message[2];
                 let address = message[1]['targetAddress'];
-
-                // TODO send/read
-                setTimeout(function() {
-                    console.log('Process ' + message[0] + '  is finished.');
-                    console.log('message',message[1]['data'][0]);
-                    message[1]['type'] = 'read';
-                    message[1]['status'] = 200;
-                    let req = [];
-                    // let raw = JSON.parse(message[1]);
-                    // TODO set address read from status no node ip here
-                    if(message[1]['type'] === 'delete' ) {
-                        for(let i in node){
-                            if(node.hasOwnProperty(i) && node[i] !== address){
-                                req.push(new Request('localhost').delete().setAddress(node).setPort(4455).addDataArray(message[1]['data']));
+                let type = message[1]['type'];
+                if(type === 'update'){
+                    superagent.post(address)
+                        .send(
+                            {
+                            'fieldId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename']),
+                            'content':message[1]['data'][0]['chunk']
                             }
-                        }
-                    }else if(message[1]['type'] === 'update' ){
-                        for(let i in node) {
-                            if (node.hasOwnProperty(i) && node[i] !== address) {
-                                req.push(new Request(message[1]['targetAddress']).replicate().setAddress(node).setPort(4455).addDataArray(message[1]['data']));
-                            }
-                        }
-                    }
-                    process.send([message[1]['status'],message[1],req]);
-                }, 1000);
+                        )
+                        .end(function (res) {
+                            process.send([type,res.ok,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        });
+                }else if(type === 'read'){
+                    superagent.get(url.resolve(address,'getFile'))
+                        .query({'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename'])})
+                        .end(function (res){
+                            process.send([type,res.ok,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        });
+                }else if(type === 'delete'){
+                    superagent.delete(url.resolve(address,'getFile'))
+                        .query({'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename'])})
+                        .end(function (res){
+                            process.send([type,res.ok,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        });
+                }
 
+
+            //     // TODO send/read
+            //     setTimeout(function() {
+            //         console.log('Process ' + message[0] + '  is finished.');
+            //         console.log('message',message[1]['data'][0]);
+            //         message[1]['type'] = 'read';
+            //         message[1]['status'] = 200;
+            //         let req = [];
+            //         // let raw = JSON.parse(message[1]);
+            //         // TODO set address read from status no node ip here
+            //
+            //
+            //         if(message[1]['type'] === 'delete' ) {
+            //             for(let i in node){
+            //                 if(node.hasOwnProperty(i) && node[i] !== address){
+            //                     req.push(new Request('localhost').delete().setAddress(node).setPort(4455).addDataArray(message[1]['data']));
+            //                 }
+            //             }
+            //         }else if(message[1]['type'] === 'update' ){
+            //             for(let i in node) {
+            //                 if (node.hasOwnProperty(i) && node[i] !== address) {
+            //                     req.push(new Request(message[1]['targetAddress']).replicate().setAddress(node).setPort(4455).addDataArray(message[1]['data']));
+            //                 }
+            //             }
+            //         }
+            //         process.send([message[1]['status'],message[1],req]);
+            //     }, 1000);
+            //
             });
         }
     }
