@@ -13,7 +13,7 @@ global.status = {};
 mt = new Mt();
 
 // Upload file
-data1 = new Data().setUser("test1").loadFile(path.join(__dirname,'data.txt'),'root').chunks(4000);
+data1 = new Data().setUser("test1").loadFile(path.join(__dirname,'data.txt'),'data.txt').chunks(4000);
 // console.log("Filename",data1[0]["filename"]);
 // console.log(path.basename(data1[0]["filename"]));
 // response1 = new Request('localhost').update().setAddress("10.0.0.1").setPort(4455).addDataArray(data1);

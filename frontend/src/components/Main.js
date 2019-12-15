@@ -82,7 +82,7 @@ class Main extends React.Component {
             formData.append("ip", this.state.ip)
             console.log(this.state.uploadFile)
             console.log(formData);
-            axios.post("http://localhost:9000/upload", formData, {
+            axios.post("http://localhost:4455/upload", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -114,7 +114,7 @@ class Main extends React.Component {
 
     download = () => {
         let params = this.state.selectedFiles;
-        axios.get("http://localhost:9000/download", {
+        axios.get("http://localhost:4455/download", {
             params: params
         }).then(res => {
             console.log(res);
@@ -123,7 +123,7 @@ class Main extends React.Component {
 
     delete = () => {
         let params = this.state.selectedFiles;
-        axios.delete("http://localhost:9000/delete", {
+        axios.delete("http://localhost:4455/delete", {
             params: params
         }).then(res => {
             console.log(res);

@@ -20,12 +20,12 @@ function Data() {
     /**
      * Read File
      * @param localAddress local file address w/ filename and extension
-     * @param remoteAddress remote file address w/o filename and extension
+     * @param name
      * @returns {Data}
      */
-    this.loadFile = function (localAddress,remoteAddress){
+    this.loadFile = function (localAddress,name){
         // let filepath = path.join(__dirname,address);
-        this.filename = path.join(remoteAddress,path.basename(localAddress));
+        this.filename = name;
         try {
             this.chunk = fs.readFileSync(localAddress, {encoding: 'binary'});
             // this.dataSize = fs.statSync(localAddress).size * 2; // HEX : BYTE  = 2:1

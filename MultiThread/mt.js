@@ -28,7 +28,7 @@ function multiProcess() {
             let node = this.node;
 
             //TODO add node list
-            while(account < processNum){
+            while(account < processNum && requestQ.length > 0){
                 if(Object.keys(cluster.workers).length <= processNum){
                     let worker = cluster.fork();
                     worker.on('message', function(message) {
@@ -43,7 +43,7 @@ function multiProcess() {
                     worker.send([account,requestQ.pop(),node]);
                     account++;
                 }
-                console.log(account);
+                console.log('core number: ',account);
             }
             cluster.on('exit', function(worker) {
                 // When the master has no more workers alive it
@@ -61,11 +61,14 @@ function multiProcess() {
             });
         } else{
             process.on('message', function(message) {
+                global.server.close();
                 console.log('Process ' + message[0] + '  is starting to work.');
                 console.log('Request: ',message[1]);
                 let node = message[2];
                 let address = message[1]['targetAddress'];
                 let type = message[1]['type'];
+                // process.send([]);
+                // Send request
                 if(type === 'update'){
                     superagent.post(address+'/addFile')
                         .send(
