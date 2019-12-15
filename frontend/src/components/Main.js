@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Button, Row, Table, Container } from 'react-bootstrap';
+import { Form, Col, Button, Row, Table, Container, ButtonGroup } from 'react-bootstrap';
 
 class Main extends React.Component {
 
@@ -8,7 +8,8 @@ class Main extends React.Component {
         ip: "",
         files: [],
         uploadFilename: "Choose file",
-        uploadFile: {}
+        uploadFile: {},
+        selectedFiles: []
     }
 
     componentDidMount() {
@@ -75,6 +76,8 @@ class Main extends React.Component {
 
         let formData = new FormData();
         formData.append("file", this.state.uploadFile);
+        formData.append("userid", this.state.userid)
+        formData.append("ip", this.state.ip)
         console.log(this.state.uploadFile)
         // axios.post("/upload", formData, {
         //     headers: {
@@ -83,11 +86,28 @@ class Main extends React.Component {
         // }).then()
     }
 
+    selectHandler = (e, i) => {
+
+        console.log(i, e.target.checked)
+        console.log(this.state.selectedFiles)
+        let newSelectedFiles = [...this.state.selectedFiles];
+        if (e.target.checked) {
+            newSelectedFiles.push(i);
+
+        } else {
+            newSelectedFiles = [...this.state.selectedFiles].filter(n => n != i);
+        }
+        this.setState({
+            selectedFiles: newSelectedFiles
+        })
+
+    }
+
     render() {
 
         let settings = (
             <Container>
-                <Row>
+                <Row className="mt-5">
                     <h1>Settings</h1>
                 </Row>
                 <Row>
@@ -122,6 +142,7 @@ class Main extends React.Component {
                             <tr>
                                 <th>Filename</th>
                                 <th>Location</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,11 +155,18 @@ class Main extends React.Component {
                                         <td>
                                             {file.path}
                                         </td>
+                                        <td>
+                                            <Form.Check onChange={(e) => this.selectHandler(e, i)}></Form.Check>
+                                        </td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </Table>
+                </Row>
+                <Row>
+                    <Button className="mr-2" disabled={this.state.selectedFiles.length == 0}>Download</Button>
+                    <Button variant="danger" disabled={this.state.selectedFiles.length == 0}>Delete</Button>
                 </Row>
             </Container>
         )
