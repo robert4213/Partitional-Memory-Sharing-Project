@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Col, Button, Row, Table, Container, ButtonGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 class Main extends React.Component {
 
@@ -7,8 +8,8 @@ class Main extends React.Component {
         userid: "",
         ip: "",
         files: [],
-        uploadFilename: "Choose file",
-        uploadFile: {},
+        uploadFilename: [],
+        uploadFile: [],
         selectedFiles: []
     }
 
@@ -65,7 +66,7 @@ class Main extends React.Component {
             console.log(e.target.files);
             this.setState({
                 uploadFilename: e.target.files[0].name,
-                uploadFile: e.target.files[0]
+                uploadFile: e.target.files
             })
         }
 
@@ -74,33 +75,59 @@ class Main extends React.Component {
     handleUpload = () => {
         if (!this.state.uploadFile) return;
 
-        let formData = new FormData();
-        formData.append("file", this.state.uploadFile);
-        formData.append("userid", this.state.userid)
-        formData.append("ip", this.state.ip)
-        console.log(this.state.uploadFile)
-        // axios.post("/upload", formData, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     }
-        // }).then()
+        for (let i = 0; i < this.state.uploadFile.length; i++) {
+            let formData = new FormData();
+            formData.append('file', this.state.uploadFile[i]);
+            formData.append("userid", this.state.userid)
+            formData.append("ip", this.state.ip)
+            console.log(this.state.uploadFile)
+            console.log(formData);
+            axios.post("http://localhost:9000/upload", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => {
+                console.log(res);
+                this.setState({
+                    uploadFile: []
+                })
+            })
+        }
     }
 
     selectHandler = (e, i) => {
 
         console.log(i, e.target.checked)
-        console.log(this.state.selectedFiles)
         let newSelectedFiles = [...this.state.selectedFiles];
         if (e.target.checked) {
-            newSelectedFiles.push(i);
+            newSelectedFiles.push(e.target.name);
 
         } else {
-            newSelectedFiles = [...this.state.selectedFiles].filter(n => n != i);
+            newSelectedFiles = [...this.state.selectedFiles].filter(n => n != e.target.name);
         }
         this.setState({
             selectedFiles: newSelectedFiles
-        })
+        }, () => console.log(this.state.selectedFiles))
+        
 
+    }
+
+    download = () => {
+        let params = this.state.selectedFiles;
+        axios.get("http://localhost:9000/download", {
+            params: params
+        }).then(res => {
+            console.log(res);
+        })
+    }
+
+    delete = () => {
+        let params = this.state.selectedFiles;
+        axios.delete("http://localhost:9000/delete", {
+            params: params
+        }).then(res => {
+            console.log(res);
+        })
     }
 
     render() {
@@ -156,7 +183,7 @@ class Main extends React.Component {
                                             {file.path}
                                         </td>
                                         <td>
-                                            <Form.Check onChange={(e) => this.selectHandler(e, i)}></Form.Check>
+                                            <Form.Check name={file.filename} onChange={(e) => this.selectHandler(e, i)}></Form.Check>
                                         </td>
                                     </tr>
                                 )
@@ -165,8 +192,8 @@ class Main extends React.Component {
                     </Table>
                 </Row>
                 <Row>
-                    <Button className="mr-2" disabled={this.state.selectedFiles.length == 0}>Download</Button>
-                    <Button variant="danger" disabled={this.state.selectedFiles.length == 0}>Delete</Button>
+                    <Button className="mr-2" disabled={this.state.selectedFiles.length == 0} onClick={this.download}>Download</Button>
+                    <Button variant="danger" disabled={this.state.selectedFiles.length == 0} onClick={this.delete}>Delete</Button>
                 </Row>
             </Container>
         )
@@ -179,8 +206,8 @@ class Main extends React.Component {
                 <Row>
                     <div className="input-group">
                         <div className="custom-file">
-                            <input type="file" className="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" onChange={(e) => this.handleSelectFile(e)} />
-                            <label className="custom-file-label" htmlFor="inputGroupFile04">{this.state.uploadFilename}</label>
+                            <input type="file" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" onChange={(e) => this.handleSelectFile(e)} multiple />
+                            {/* <label className="custom-file-label" htmlFor="inputGroupFile04">{this.state.uploadFilename ? }</label> */}
                         </div>
                         <div className="input-group-append">
                             <button className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" onClick={this.handleUpload}>Upload</button>
