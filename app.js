@@ -16,7 +16,10 @@ const PORT = 4455;
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.get('/file',(req,res,next)=>{
+app.get('/download',(req,res,next)=>{
+    console.log(req.body);
+    res.status(200).json({Succeed:200});
+    return;
     //TODO create request
 
     mt.addRequestArray(responseArray);
@@ -52,7 +55,11 @@ app.get('/file',(req,res,next)=>{
     });
 });
 
-app.post('/file',(req,res,next)=> {
+app.post('/upload',(req,res,next)=> {
+    console.log(req);
+    res.status(200).json({Succeed:200});
+    return;
+
     mt.addRequestArray(responseArray);
     mt.execute(4).then(response => function () {
         if(checkStatus(response[0])){
@@ -76,6 +83,10 @@ app.post('/file',(req,res,next)=> {
 });
 
 app.delete('/file',(req,res,next) =>{
+    console.log(req);
+    res.status(200).json({Succeed:200});
+    return;
+
     mt.addRequestArray(responseArray);
     mt.execute(4).then(response => function () {
         if(checkStatus(response[0])){
@@ -98,7 +109,7 @@ app.delete('/file',(req,res,next) =>{
     });
 });
 
-app.get('/status',(req,res,next)=>{
+app.get('/filelist',(req,res,next)=>{
     let file = {
         "file":["a.txt","b.txt","c.txt","d.txt"]
     };
