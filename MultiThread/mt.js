@@ -18,7 +18,7 @@ function multiProcess() {
     };
 
     //TODO read status
-    this.execute = function (processNum) {
+    this.execute = function (processNum,callback) {
         if(cluster.isMaster) {
             let start = Date.now();
             console.log("Start Sending");
@@ -51,8 +51,12 @@ function multiProcess() {
                 if (Object.keys(cluster.workers).length === 0) {
                     console.log(JSON.stringify(queue));
                     console.log('Elapsed Time: ' + (Date.now() - start) + 'ms');
-                    return queue;
+                    // return queue;
                     // process.exit(1);
+                    // return new Promise(function (resolve,reject) {
+                    //     resolve(queue);
+                    // });
+                    callback(queue);
                 }
             });
         } else{
@@ -63,21 +67,25 @@ function multiProcess() {
                 let address = message[1]['targetAddress'];
                 let type = message[1]['type'];
                 if(type === 'update'){
-                    superagent.post(address)
+                    superagent.post(address+'/addFile')
                         .send(
                             {
-                            'fieldId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename']),
+                            'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename']),
                             'content':message[1]['data'][0]['chunk']
                             }
                         )
-                        .end(function (res) {
-                            process.send([type,res.ok,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        .then(res => {
+                            console.log(res.text);
+                            process.send([type,res.body,path.basename(message[1]['data'][0]['filename'])]);
                         });
                 }else if(type === 'read'){
-                    superagent.get(url.resolve(address,'getFile'))
+                    console.log('Read Start');
+                    console.log(url.resolve(address,'/getFile'));
+                    superagent.get(address+'/getFile')
                         .query({'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename'])})
-                        .end(function (res){
-                            process.send([type,res.ok,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        .then(res => {
+                            console.log(res.text);
+                            process.send([type,res.body,path.basename(message[1]['data'][0]['filename'])]);
                         });
                 }else if(type === 'delete'){
                     superagent.delete(url.resolve(address,'getFile'))
