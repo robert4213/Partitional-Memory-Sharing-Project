@@ -197,8 +197,8 @@ class Main extends React.Component {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Filename</th>
-                                <th>Location</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
