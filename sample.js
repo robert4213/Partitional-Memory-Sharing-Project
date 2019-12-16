@@ -1,6 +1,5 @@
 const Request = require('./Request/request');
 const Data = require('./Request/data');
-const Status = require('./Status/status_old');
 const path = require('path').posix;
 const Mt = require('./MultiThread/mt');
 const fs = require('fs');
@@ -13,7 +12,7 @@ global.status = {};
 mt = new Mt();
 
 // Upload file
-data1 = new Data().setUser("test1").loadFile(path.join(__dirname,'data.txt'),'data.txt').chunks(4000);
+data1 = new Data().setUser("test1").loadFile(path.join(__dirname,'data.txt'),'data.txt').chunks(2);
 // console.log("Filename",data1[0]["filename"]);
 // console.log(path.basename(data1[0]["filename"]));
 // response1 = new Request('localhost').update().setAddress("10.0.0.1").setPort(4455).addDataArray(data1);
@@ -33,6 +32,12 @@ mt.addRequestArray(responseArray);
 mt.execute(1, queue =>{
     console.log('final result',queue[0][1]['content']);
 });
+
+let a='{"a.txt":1}';
+JSON.parse(a);
+
+var config=require('./config/default');
+console.log(config);
 
 // Data.saveFile(__dirname,'t2.js',d);
 //

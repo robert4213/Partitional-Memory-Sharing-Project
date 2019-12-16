@@ -83,7 +83,7 @@ class Main extends React.Component {
             formData.append("ip", this.state.ip)
             console.log(this.state.uploadFile)
             console.log(formData);
-            axios.post("http://localhost:4455/upload", formData, {
+            axios.post("http://localhost:9000upload", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -140,7 +140,12 @@ class Main extends React.Component {
     }
 
     reload = () => {
-        axios.get("http://localhost:9000/status").then(
+        let params = {
+            userid: this.state.userid,
+        };
+        axios.get("http://localhost:9000/status", {
+            params: params
+        }).then(
             res => {
                 let data = res.data;
 
@@ -148,7 +153,7 @@ class Main extends React.Component {
 
                 let destruct = ([key, value]) => {
                     console.log(value);
-                    if (typeof value == 'string') {
+                    if (typeof value == 'number') {
                         output.push({
                             filename: key,
                             path: value
@@ -198,7 +203,7 @@ class Main extends React.Component {
                         <thead>
                             <tr>
                                 <th>Filename</th>
-                                <th>Path</th>
+                                <th>Chunk Number</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

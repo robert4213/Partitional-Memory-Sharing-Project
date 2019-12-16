@@ -16,17 +16,42 @@ Format:
 status.getList = function(username,callback){
     let list = '';
     sendRequest.get('filelist', username,function (response) {
-        list = response.body['content'];
-        if(list === null){
+        // list = response.body['content'];
+        if(response.body['content'] === null){
             console.log('New File List Created');
+            sendRequest.post('filelist',username,JSON.stringify({}),function (response) {
+                console.log('Add New List',response.text);
+            });
             callback({});
         }else {
-            callback(JSON.parse(list));
+            callback(JSON.parse(response.body['content']));
         }
     })
 };
 
-status.addItem = function(username,item,num,callback){
+status.getItem = function(filename,username,callback){
+    sendRequest.get('filelist', username,function (response) {
+        console.log('read file item',response.body);
+        if(typeof response.body === 'undefined'){
+            callback(-2);
+        }else if(response.body['content'] === null){
+            console.log('New File List Created');
+            sendRequest.post('filelist',username,JSON.stringify({}),function (response) {
+                console.log('Add New List',response.text);
+                callback(-1);
+            });
+        }else if(typeof JSON.parse( response.body['content'])[filename] === "undefined"){
+            console.log('Item List No file Found');
+            callback(-1);
+        }else{
+            console.log('File Found',JSON.parse( response.body['content'])[filename], 'chunks');
+            callback(JSON.parse(response.body['content'])[filename]);
+        }
+    })
+};
+
+
+status.addItem = function(item,username,num,callback){
     status.getList(username,function (list) {
         list[item] = num;
         sendRequest.post('filelist',username,JSON.stringify(list),function (response) {
@@ -34,9 +59,9 @@ status.addItem = function(username,item,num,callback){
             callback(response);
         });
     })
-}
+};
 
-status.deleteItem = function(username,item,callback){
+status.deleteItem = function(item,username,callback){
     status.getList(username,function (list) {
         delete list[item];
         sendRequest.post('filelist',username,JSON.stringify(list),function (response) {
@@ -44,7 +69,7 @@ status.deleteItem = function(username,item,callback){
             callback(response);
         });
     })
-}
+};
 
 module.exports = status;
 

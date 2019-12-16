@@ -70,10 +70,12 @@ mapping.getFile = function (filename,username,callback) {
     client.connect( err => {
         let collection = client.db("test").collection("filelist");
         collection.find({filename: filename, user: username}).toArray(function (err, results) {
-            if(results[0]['num'] === null){
+            console.log(results);
+            if(typeof results[0] === 'undefined' || typeof results[0]['num'] === 'undefined'){
                 callback(-1);
+            }else {
+                callback(results[0]['num'])
             }
-            callback(results[0]['num'])
         });
     });
     client.close();

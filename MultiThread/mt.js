@@ -62,7 +62,7 @@ function multiProcess() {
         } else{
             process.on('message', function(message) {
                 console.log('Process ' + message[0] + '  is starting to work.');
-                console.log('Request: ',message[1]);
+                // console.log('Request: ',message[1]);
                 let node = message[2];
                 let address = message[1]['targetAddress'];
                 let type = message[1]['type'];
@@ -74,12 +74,15 @@ function multiProcess() {
                             {
                                 'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename']),
                                 'content':message[1]['data'][0]['chunk'],
-                                'size':message[1]['data'][0]['dataSize']
+                                'size':message[1]['data'][0]['chunk'].length
                             }
                         )
                         .then(res => {
-                            console.log(res.text);
+                            console.log(res.status);
                             process.send([type,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        },err =>{
+                            console.log(err.status);
+                            process.send(["error",err.message,path.basename(message[1]['data'][0]['filename'])]);
                         });
                 }else if(type === 'read'){
                     console.log('Read Start');
@@ -89,6 +92,9 @@ function multiProcess() {
                         .then(res => {
                             console.log('Get Data', res.body);
                             process.send([type,res.body,path.basename(message[1]['data'][0]['filename'])]);
+                        }, err =>{
+                            console.log(err.status);
+                            process.send(["error",err.message,path.basename(message[1]['data'][0]['filename'])]);
                         });
                 }else if(type === 'delete'){
                     superagent.delete(url.resolve(address,'getFile'))

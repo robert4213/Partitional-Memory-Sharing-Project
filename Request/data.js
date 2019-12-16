@@ -5,7 +5,9 @@ const multiparty = require('multiparty');
 
 
 
+
 function Data() {
+    const config = require('../config/default');
     // this.filename = '';
     this.chunk = '';
     this.filename = ''; // path/filename
@@ -27,7 +29,7 @@ function Data() {
         // let filepath = path.join(__dirname,address);
         this.filename = name;
         try {
-            this.chunk = fs.readFileSync(localAddress, {encoding: 'binary'});
+            this.chunk = fs.readFileSync(localAddress, {encoding: config.encoding});
             // this.dataSize = fs.statSync(localAddress).size * 2; // HEX : BYTE  = 2:1
             this.dataSize = this.chunk.length;
         }catch (e) {
@@ -103,8 +105,10 @@ function Data() {
 
 module.exports = Data;
 
+const config = require('../config/default');
+
 module.exports.saveFile = function (localAddress, filename, chunk) {
-    fs.writeFile( path.join(localAddress,filename),chunk,{encoding:'binary'},function (err) {
+    fs.writeFile( path.join(localAddress,filename),chunk,{encoding:config.encoding},function (err) {
         if(err){
             throw 'error writing file+' + err;
         }

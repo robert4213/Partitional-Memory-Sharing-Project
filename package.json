@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "latest",
     "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
     "express": "latest",
     "formidable": "^1.2.1",
     "grpc": "^1.24.2",

@@ -1,0 +1,7 @@
+{
+  "address" : "localhost:5000",
+  "MAXSIZE" : 20971520,
+  "appname" : "dropbox",
+  "encoding" : "binary",
+  "processNum" : 4
+}
