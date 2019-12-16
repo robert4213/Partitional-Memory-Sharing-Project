@@ -57,7 +57,8 @@ function Data() {
 
     this.chunks = function(size){
         if(this.dataSize < size) {
-            return [this];
+            const piece = new Data().setFIleName(this.filename,'0','1').setChunk(this.chunk).setPureUser(this.appName).setSize(this.dataSize);
+            return [piece];
         }
 
         let remainSize = this.dataSize;
@@ -76,6 +77,7 @@ function Data() {
             // console.log('Data',JSON.stringify(piece));
         }
         const piece = new Data().setFIleName(this.filename,i.toString(),total.toString()).setChunk(this.chunk).setPureUser(this.appName).setSize(remainSize);
+        console.log('pieceid',piece.filename)
         array.push(piece);
 
         return array;

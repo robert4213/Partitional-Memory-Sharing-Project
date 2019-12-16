@@ -16,27 +16,34 @@ console.log(filepath);
 mt = new Mt();
 
 data = new Data().setUser(username).loadFile(filepath,filename).chunks(config.MAXSIZE);
-responseArray = [];
+var responseArray = [];
 for(let chunk in data){
     if (data.hasOwnProperty(chunk)) {
+        // console.log(JSON.stringify(data[chunk]));
         let response = new Request('localhost').update().setAddress(config.address).addData(data[chunk]);
         responseArray.push(response);
     }
 }
+
+var addFile = false;
 
 mt.addRequestArray(responseArray);
 mt.execute(config.processNum, queue =>{
     let flag = false;
     for(let i in queue){
         if(queue[i][0] === 'error'){
-            console.log(queue[i]);
+            console.log(JSON.stringify(queue[i]));
             flag = true;
         }else if(queue[i][1]['success'] === 'false'){
-            console.log(queue[i]);
+            console.log(JSON.stringify(queue[i]));
             flag = true;
         }
     }
-    if(!flag) {
+
+    console.log("FileList Update")
+
+    if(!flag ) {
+        addFile = true;
         statusHandler.getItem(filename, username, num => {
             console.log('Upload Check file chunk number');
             if (num !== data.length) {

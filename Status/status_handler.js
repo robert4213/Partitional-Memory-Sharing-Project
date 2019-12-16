@@ -16,8 +16,15 @@ Format:
 status.getList = function(username,callback){
     let list = '';
     sendRequest.get('filelist', username,function (response) {
+        console.log(response);
         // list = response.body['content'];
-        if(response.body['content'] === null){
+        if (typeof response.body['content'] === 'undefined'){
+            console.log('New File List Created');
+            sendRequest.post('filelist',username,JSON.stringify({}),function (response) {
+                console.log('Add New List',response.text);
+            });
+            callback({});
+        }else if(response.body['content'] === null){
             console.log('New File List Created');
             sendRequest.post('filelist',username,JSON.stringify({}),function (response) {
                 console.log('Add New List',response.text);
@@ -31,7 +38,7 @@ status.getList = function(username,callback){
 
 status.getItem = function(filename,username,callback){
     sendRequest.get('filelist', username,function (response) {
-        console.log('read file item',response.body);
+        console.log('read file item',response.text);
         if(typeof response.body === 'undefined'){
             callback(-2);
         }else if(response.body['content'] === null){

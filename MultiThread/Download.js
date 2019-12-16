@@ -36,7 +36,7 @@ mt.execute(config.processNum, queue =>{
             file.end();
             process.exit();
         }
-        console.log(queue[i][1]['content']);
+        // console.log(JSON.stringify(queue[i][1]['content']));
         file.write(queue[i][1]['content']);
     }
     file.end();
