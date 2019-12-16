@@ -14,47 +14,48 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        let data = {
-            "root": {
-                a: {
-                    b: {
-                        c: {
-                            "a.txt": "/root/a/b/c/a.txt"
-                        }
-                    }
-                },
-                b: {
-                    c: {
-                        "cd": {
-                            "d.txt": "/root/b/c/cd/d/txt"
-                        }
-                    },
-                    "cc.txt": "/root/b/cc.txt",
-                    "d": {
-                        "d.txt": "/root/b/d/d.txt"
-                    }
-                }
-            }
-        }
+        this.reload();
+        // let data = {
+        //     "root": {
+        //         a: {
+        //             b: {
+        //                 c: {
+        //                     "a.txt": "/root/a/b/c/a.txt"
+        //                 }
+        //             }
+        //         },
+        //         b: {
+        //             c: {
+        //                 "cd": {
+        //                     "d.txt": "/root/b/c/cd/d/txt"
+        //                 }
+        //             },
+        //             "cc.txt": "/root/b/cc.txt",
+        //             "d": {
+        //                 "d.txt": "/root/b/d/d.txt"
+        //             }
+        //         }
+        //     }
+        // }
 
-        let output = [];
+        // let output = [];
 
-        let destruct = ([key, value]) => {
-            console.log(value);
-            if (typeof value == 'string') {
-                output.push({
-                    filename: key,
-                    path: value
-                });
-            } else {
-                Object.entries(value).forEach(destruct)
-            }
-        }
-        Object.entries(data).forEach(destruct);
+        // let destruct = ([key, value]) => {
+        //     console.log(value);
+        //     if (typeof value == 'string') {
+        //         output.push({
+        //             filename: key,
+        //             path: value
+        //         });
+        //     } else {
+        //         Object.entries(value).forEach(destruct)
+        //     }
+        // }
+        // Object.entries(data).forEach(destruct);
 
-        this.setState(state => {
-            return { files: output }
-        }, () => console.log("update state:", this.state.files))
+        // this.setState(state => {
+        //     return { files: output }
+        // }, () => console.log("update state:", this.state.files))
 
     }
 
@@ -108,12 +109,16 @@ class Main extends React.Component {
         this.setState({
             selectedFiles: newSelectedFiles
         }, () => console.log(this.state.selectedFiles))
-        
+
 
     }
 
     download = () => {
-        let params = this.state.selectedFiles;
+        let params = {
+            userid: this.state.userid,
+            ip: this.state.ip,
+            file: this.state.selectedFiles
+        }
         axios.get("http://localhost:9000/download", {
             params: params
         }).then(res => {
@@ -122,12 +127,43 @@ class Main extends React.Component {
     }
 
     delete = () => {
-        let params = this.state.selectedFiles;
+        let params = {
+            userid: this.state.userid,
+            ip: this.state.ip,
+            file: this.state.selectedFiles
+        }
         axios.delete("http://localhost:9000/delete", {
             params: params
         }).then(res => {
             console.log(res);
         })
+    }
+
+    reload = () => {
+        axios.get("http://localhost:9000/status").then(
+            res => {
+                let data = res.data;
+
+                let output = [];
+
+                let destruct = ([key, value]) => {
+                    console.log(value);
+                    if (typeof value == 'string') {
+                        output.push({
+                            filename: key,
+                            path: value
+                        });
+                    } else {
+                        Object.entries(value).forEach(destruct)
+                    }
+                }
+                Object.entries(data).forEach(destruct);
+
+                this.setState(state => {
+                    return { files: output }
+                }, () => console.log("update state:", this.state.files))
+            }
+        )
     }
 
     render() {
@@ -145,12 +181,6 @@ class Main extends React.Component {
                             </Col>
                             <Col>
                                 <Form.Control placeholder="Host IP" name="ip" onChange={this.onChange} value={this.state.ip} />
-                            </Col>
-                        </Form.Row>
-                        <Form.Row>
-                            <Col>
-                                <br></br>
-                                <Button>Update</Button>
                             </Col>
                         </Form.Row>
                     </Form>
@@ -193,7 +223,8 @@ class Main extends React.Component {
                 </Row>
                 <Row>
                     <Button className="mr-2" disabled={this.state.selectedFiles.length == 0} onClick={this.download}>Download</Button>
-                    <Button variant="danger" disabled={this.state.selectedFiles.length == 0} onClick={this.delete}>Delete</Button>
+                    <Button variant="danger mr-2" disabled={this.state.selectedFiles.length == 0} onClick={this.delete}>Delete</Button>
+                    <Button onClick={this.reload}>Reload</Button>
                 </Row>
             </Container>
         )
