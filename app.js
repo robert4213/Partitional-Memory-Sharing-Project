@@ -22,6 +22,9 @@ app.use(bodyParser.json());
 
 app.get('/download',(req,res,next)=>{
     let user = 'test1';
+    console.log('download',req.query);
+    res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3000').json({Succeed:200});
+    return;
     console.log(req.query);
     for(let i in req.query){
         if(req.query.hasOwnProperty(i)) {
@@ -77,7 +80,9 @@ app.post('/upload',(req,res,next)=> {
 
 app.delete('/delete',(req,res,next) =>{
     let user = 'test1';
-    console.log(req.query);
+    console.log('delete',req.query);
+    res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3000').json({Succeed:200});
+    return;
     for(let i in req.query){
         if(req.query.hasOwnProperty(i)) {
             mapping.getFile(req.query[i], user, num => {

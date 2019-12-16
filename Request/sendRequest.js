@@ -2,8 +2,8 @@ const superagent = require('superagent');
 const path = require('path').posix;
 const mapping = require('./mapping');
 const sendRequest = {};
-const address = "10.250.18.176:5000";
-// const address ='localhost:9000';
+// const address = "10.250.18.176:5000";
+const address ='localhost:5000';
 const localAddress = path.join(__dirname,'download');
 
 sendRequest.post = function (filename,username,chunk,callback) {

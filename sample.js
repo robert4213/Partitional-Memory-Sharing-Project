@@ -22,7 +22,7 @@ let d = '';
 
 for(let chunk in data1){
     if (data1.hasOwnProperty(chunk)) {
-        let response = new Request('localhost').read().setAddress("localhost:5000").addData(data1[chunk]);
+        let response = new Request('localhost').update().setAddress("localhost:5000").addData(data1[chunk]);
         responseArray.push(response);
     }
 }
