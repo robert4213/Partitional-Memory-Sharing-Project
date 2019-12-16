@@ -213,7 +213,7 @@ class Main extends React.Component {
                                             {file.path}
                                         </td>
                                         <td>
-                                            <Form.Check name={file.filename} onChange={(e) => this.selectHandler(e, i)}></Form.Check>
+                                            <Form.Check name={file.path} onChange={(e) => this.selectHandler(e, i)}></Form.Check>
                                         </td>
                                     </tr>
                                 )
