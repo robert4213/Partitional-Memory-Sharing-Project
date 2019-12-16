@@ -22,7 +22,7 @@ let d = '';
 
 for(let chunk in data1){
     if (data1.hasOwnProperty(chunk)) {
-        let response = new Request('localhost').read().setAddress("172.20.10.12:5000").addData(data1[chunk]);
+        let response = new Request('localhost').read().setAddress("localhost:5000").addData(data1[chunk]);
         responseArray.push(response);
     }
 }
@@ -31,7 +31,7 @@ console.log(JSON.stringify(responseArray));
 // Data.saveFile(__dirname,"image38.jpg",data1.chunk);
 mt.addRequestArray(responseArray);
 mt.execute(1, queue =>{
-    console.log(aa);
+    console.log('final result',queue[0][1]['content']);
 });
 
 // Data.saveFile(__dirname,'t2.js',d);

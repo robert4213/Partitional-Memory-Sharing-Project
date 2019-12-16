@@ -61,7 +61,6 @@ function multiProcess() {
             });
         } else{
             process.on('message', function(message) {
-                global.server.close();
                 console.log('Process ' + message[0] + '  is starting to work.');
                 console.log('Request: ',message[1]);
                 let node = message[2];
@@ -73,8 +72,9 @@ function multiProcess() {
                     superagent.post(address+'/addFile')
                         .send(
                             {
-                            'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename']),
-                            'content':message[1]['data'][0]['chunk']
+                                'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename']),
+                                'content':message[1]['data'][0]['chunk'],
+                                'size':message[1]['data'][0]['dataSize']
                             }
                         )
                         .then(res => {
@@ -87,7 +87,7 @@ function multiProcess() {
                     superagent.get(address+'/getFile')
                         .query({'fileId':path.join(message[1]['data'][0]['appName'],message[1]['data'][0]['filename'])})
                         .then(res => {
-                            console.log(res.text);
+                            console.log('Get Data', res.body);
                             process.send([type,res.body,path.basename(message[1]['data'][0]['filename'])]);
                         });
                 }else if(type === 'delete'){

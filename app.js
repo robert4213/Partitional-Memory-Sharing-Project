@@ -13,7 +13,7 @@ const Request = require('./Request/request');
 const Data = require('./Request/data');
 const Status = require('./Status/status_handler');
 
-const MAXSIZE = 40000000;
+const MAXSIZE = 4*1024*1024;
 
 global.filelist = [];
 

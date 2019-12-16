@@ -2,8 +2,8 @@ const superagent = require('superagent');
 const path = require('path').posix;
 const mapping = require('./mapping');
 const sendRequest = {};
-// const address = "172.20.10.12:5000";
-const address ='localhost:9000';
+const address = "10.250.18.176:5000";
+// const address ='localhost:9000';
 const localAddress = path.join(__dirname,'download');
 
 sendRequest.post = function (filename,username,chunk,callback) {
@@ -17,7 +17,7 @@ sendRequest.post = function (filename,username,chunk,callback) {
             }
         )
         .then(res => {
-            console.log('Res',res.txt);
+            console.log('Res',res.text);
             callback(res);
         });
 };
@@ -30,7 +30,7 @@ sendRequest.get = function (filename,username,callback) {
             'fileId':path.join(appname,filename),
         })
         .then(res => {
-            console.log('Res',res.text);
+            console.log('Res',res.body['content']);
             callback(res);
         });
 };
@@ -47,8 +47,5 @@ sendRequest.delete = function (filename,username,callback) {
             // callback(res);
         });
 };
-
-
-
 
 module.exports = sendRequest;
