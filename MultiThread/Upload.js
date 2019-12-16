@@ -5,10 +5,13 @@ const path = require('path').posix;
 const config = require('../config/default');
 const statusHandler = require('../Status/status_handler');
 
-console.log(process.argv);
+console.log(process.argv.length);
 let filename = process.argv[2];
 let username = process.argv[3];
 let filepath = process.argv[4];
+
+console.log(filename, username);
+console.log(filepath);
 
 mt = new Mt();
 

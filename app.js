@@ -37,17 +37,17 @@ app.get('/download',(req,res,next)=>{
                         res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3000').json({Success: 'Success'});
                     })
                 }else{
-                    // TODO exec multi
-                    exec('node sample', (error, stdout, stderr) => {
+                    exec('node ./MultiThread/Download '+req.query['file'][i]+' '+ user + ' '+ num, (error, stdout, stderr) => {
                         if (error) {
                             console.error(`Error: ${error}`);
                             return;
                         }
                         console.log(`stdout: ${stdout}`);
                         console.error(`stderr: ${stderr}`);
+                        res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3000').json({Success: 'Success'});
                     });
 
-                    res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3000').json({Success: 'Go Multi Download'});
+                    // res.status(200).set('Access-Control-Allow-Origin', 'http://localhost:3000').json({Success: 'Go Multi Download'});
                 }
             });
         }
@@ -76,6 +76,7 @@ app.post('/upload',(req,res,next)=> {
         console.log(MAXSIZE);
         if(size>MAXSIZE){
             console.log('Multiprocess On');
+            console.log('node ./MultiThread/Upload '+filename+' '+ user + ' '+ filepath);
             exec('node ./MultiThread/Upload '+filename+' '+ user + ' '+ filepath, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error: ${error}`);
@@ -132,9 +133,6 @@ app.delete('/delete',(req,res,next) =>{
 });
 
 app.get('/status',(req,res,next)=>{
-    // let file = {
-    //     "file":["a.txt","b.txt","c.txt","d.txt"]
-    // };
     console.log("Get File list",req.query);
     statusHandler.getList(req.query['userid'],function (list) {
         let file = {};

@@ -33,7 +33,7 @@ function multiProcess() {
                     let worker = cluster.fork();
                     worker.on('message', function(message) {
                         console.log('Process ' + this.process.pid + '  has retrieved a new response.');
-                        queue.push(message);
+                        queue[message[2]] = message;
                         if(requestQ.length>0){
                             worker.send([account,requestQ.pop(),node]);
                         }else {
@@ -48,7 +48,7 @@ function multiProcess() {
             cluster.on('exit', function(worker) {
                 // When the master has no more workers alive it
                 // prints the elapsed time and then kills itself
-                if (Object.keys(cluster.workers).length === 0) {
+                if (Object.keys(cluster.workers).length === 0 && requestQ.length === 0) {
                     console.log(JSON.stringify(queue));
                     console.log('Elapsed Time: ' + (Date.now() - start) + 'ms');
                     // return queue;

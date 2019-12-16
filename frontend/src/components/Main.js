@@ -83,7 +83,7 @@ class Main extends React.Component {
             formData.append("ip", this.state.ip)
             console.log(this.state.uploadFile)
             console.log(formData);
-            axios.post("http://localhost:9000upload", formData, {
+            axios.post("http://localhost:9000/upload", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
