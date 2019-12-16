@@ -114,17 +114,12 @@ class Main extends React.Component {
     }
 
     download = () => {
-<<<<<<< HEAD
         let params = {
             userid: this.state.userid,
             ip: this.state.ip,
             file: this.state.selectedFiles
         }
         axios.get("http://localhost:9000/download", {
-=======
-        let params = this.state.selectedFiles;
-        axios.get("http://localhost:4455/download", {
->>>>>>> b899f7a14f08550837bc183da13ddbc487a463d6
             params: params
         }).then(res => {
             console.log(res);
@@ -132,17 +127,12 @@ class Main extends React.Component {
     }
 
     delete = () => {
-<<<<<<< HEAD
         let params = {
             userid: this.state.userid,
             ip: this.state.ip,
             file: this.state.selectedFiles
         }
         axios.delete("http://localhost:9000/delete", {
-=======
-        let params = this.state.selectedFiles;
-        axios.delete("http://localhost:4455/delete", {
->>>>>>> b899f7a14f08550837bc183da13ddbc487a463d6
             params: params
         }).then(res => {
             console.log(res);
