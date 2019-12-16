@@ -12,12 +12,17 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "latest",
+    "connect-multiparty": "^2.2.0",
     "express": "latest",
+    "formidable": "^1.2.1",
     "grpc": "^1.24.2",
+    "mongodb": "^3.4.0",
+    "multer": "^1.4.2",
     "multiparty": "^4.2.1",
     "nodemon": "^2.0.1",
     "q": "^1.5.1",
     "request": "^2.88.0",
-    "superagent": "^5.1.2"
+    "superagent": "^5.1.2",
+    "throng": "^4.0.0"
   }
 }

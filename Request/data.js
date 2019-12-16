@@ -20,14 +20,14 @@ function Data() {
     /**
      * Read File
      * @param localAddress local file address w/ filename and extension
-     * @param remoteAddress remote file address w/o filename and extension
+     * @param name
      * @returns {Data}
      */
-    this.loadFile = function (localAddress,remoteAddress){
+    this.loadFile = function (localAddress,name){
         // let filepath = path.join(__dirname,address);
-        this.filename = path.join(remoteAddress,path.basename(localAddress));
+        this.filename = name;
         try {
-            this.chunk = fs.readFileSync(localAddress, {encoding: 'hex'});
+            this.chunk = fs.readFileSync(localAddress, {encoding: 'binary'});
             // this.dataSize = fs.statSync(localAddress).size * 2; // HEX : BYTE  = 2:1
             this.dataSize = this.chunk.length;
         }catch (e) {
@@ -62,7 +62,7 @@ function Data() {
         let i = 0;
         let total = Math.ceil(remainSize/size);
         let array = [];
-        console.log("data array starting",array);
+        // console.log("data array starting",array);
 
         while(remainSize > size){
             let str = this.chunk.slice(0,size);
@@ -104,7 +104,7 @@ function Data() {
 module.exports = Data;
 
 module.exports.saveFile = function (localAddress, filename, chunk) {
-    fs.writeFile( path.join(localAddress,filename),chunk,{encoding:'hex'},function (err) {
+    fs.writeFile( path.join(localAddress,filename),chunk,{encoding:'binary'},function (err) {
         if(err){
             throw 'error writing file+' + err;
         }
