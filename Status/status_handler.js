@@ -18,7 +18,7 @@ status.getList = function(username,callback){
     sendRequest.get('filelist', username,function (response) {
         console.log(response);
         // list = response.body['content'];
-        if (typeof response.body['content'] === 'undefined'){
+        if (!response.body['content']){
             console.log('New File List Created');
             sendRequest.post('filelist',username,JSON.stringify({}),function (response) {
                 console.log('Add New List',response.text);
@@ -39,9 +39,10 @@ status.getList = function(username,callback){
 status.getItem = function(filename,username,callback){
     sendRequest.get('filelist', username,function (response) {
         console.log('read file item',response.text);
-        if(typeof response.body === 'undefined'){
-            callback(-2);
-        }else if(response.body['content'] === null){
+        // if(typeof response.body === undefined){
+        //     callback(-2);
+        // }else
+            if(!response.body['content']){
             console.log('New File List Created');
             sendRequest.post('filelist',username,JSON.stringify({}),function (response) {
                 console.log('Add New List',response.text);
