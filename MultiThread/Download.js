@@ -15,7 +15,7 @@ responseArray = [];
 mt = new Mt();
 for(let i = 0; i< chunkNum; i++){
     let data = new Data().setUser(username).setFIleName(filename,i.toString(),chunkNum.toString());
-    console.log(data);
+    // console.log(data);
     let response = new Request('localhost').read().setAddress(config.address).addData(data);
     responseArray.push(response);
 }

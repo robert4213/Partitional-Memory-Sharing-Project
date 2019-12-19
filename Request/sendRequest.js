@@ -20,6 +20,8 @@ sendRequest.post = function (filename,username,chunk,callback) {
         .then(res => {
             console.log('Res',res.text);
             callback(res);
+        },err=>{
+            callback(err);
         });
 };
 

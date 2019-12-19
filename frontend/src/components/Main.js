@@ -5,7 +5,7 @@ import axios from 'axios';
 class Main extends React.Component {
 
     state = {
-        userid: "",
+        userid: "test1",
         ip: "",
         files: [],
         uploadFilename: [],

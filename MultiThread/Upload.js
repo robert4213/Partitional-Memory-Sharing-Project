@@ -40,19 +40,19 @@ mt.execute(config.processNum, queue =>{
         }
     }
 
-    console.log("FileList Update")
-
-    if(!flag ) {
-        addFile = true;
-        statusHandler.getItem(filename, username, num => {
-            console.log('Upload Check file chunk number');
-            if (num !== data.length) {
-                console.log('File List Update, Chunk Num: ', data.length);
-                statusHandler.addItem(filename, username, data.length, function (response) {
-                    console.log('update list', response.body);
-                });
-            }
-        });
-    }
+    // console.log("FileList Update")
+    //
+    // if(!flag ) {
+    //     addFile = true;
+    //     statusHandler.getItem(filename, username, num => {
+    //         console.log('Upload Check file chunk number');
+    //         if (num !== data.length) {
+    //             console.log('File List Update, Chunk Num: ', data.length);
+    //             statusHandler.addItem(filename, username, data.length, function (response) {
+    //                 console.log('update list', response.body);
+    //             });
+    //         }
+    //     });
+    // }
 });
 
